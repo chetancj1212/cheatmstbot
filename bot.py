@@ -459,7 +459,10 @@ def start_health_server():
 
 
 # ─── Main ────────────────────────────────────────────────────────────────────
-def main():
+import asyncio
+
+
+async def async_main():
     if not BOT_TOKEN:
         print("❌ BOT_TOKEN is missing! Set it in .env")
         return
@@ -478,8 +481,20 @@ def main():
     app.add_handler(CallbackQueryHandler(cb_generate_creds, pattern="^generate_creds$"))
 
     logger.info("🤖 CheatMST Bot is running...")
-    app.run_polling(drop_pending_updates=True)
+
+    async with app:
+        await app.start()
+        await app.updater.start_polling(drop_pending_updates=True)
+        # Keep running until interrupted
+        try:
+            while True:
+                await asyncio.sleep(3600)
+        except (KeyboardInterrupt, SystemExit):
+            pass
+        finally:
+            await app.updater.stop()
+            await app.stop()
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(async_main())
