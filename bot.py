@@ -6,6 +6,7 @@ Credentials are stored in Firebase RTDB (same structure as admin dashboard).
 
 import os
 import random
+from urllib.parse import quote
 import string
 import hashlib
 import logging
@@ -171,6 +172,9 @@ async def _send_status_message(target, context, user, bot_user, tid, edit=False)
     ch_icon = "✅" if joined else "❌"
     rf_icon = "✅" if ref_count >= REQUIRED_REFERRALS else "❌"
 
+    wa_msg = quote(f"🔥 Get FREE CheatMST credentials! Join & grab yours 👉 {ref_link}")
+    wa_url = f"https://wa.me/?text={wa_msg}"
+
     keyboard = [
         [
             InlineKeyboardButton(
@@ -180,6 +184,7 @@ async def _send_status_message(target, context, user, bot_user, tid, edit=False)
         ],
         [InlineKeyboardButton("🔄 Check Status", callback_data="check_status")],
         [InlineKeyboardButton("🎁 Get My Credentials", callback_data="generate_creds")],
+        [InlineKeyboardButton("📲 Share on WhatsApp", url=wa_url)],
         [InlineKeyboardButton("📩 Contact Admin", url="https://t.me/Contira")],
     ]
     markup = InlineKeyboardMarkup(keyboard)
