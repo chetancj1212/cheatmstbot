@@ -172,8 +172,18 @@ async def _send_status_message(target, context, user, bot_user, tid, edit=False)
     ch_icon = "✅" if joined else "❌"
     rf_icon = "✅" if ref_count >= REQUIRED_REFERRALS else "❌"
 
-    wa_msg = quote(f"🔥 Get FREE CheatMST credentials! Join & grab yours 👉 {ref_link}")
-    wa_url = f"https://wa.me/?text={wa_msg}"
+    wa_text = (
+        "🎓 *CheatMST* — Your Exam Companion!\n\n"
+        "How it works:\n"
+        "1️⃣ Open exam with your pod link\n"
+        "2️⃣ Launch CheatMST app\n"
+        "3️⃣ Enter credentials (one-time setup)\n"
+        "4️⃣ Start your exam\n"
+        "5️⃣ Hit Capture — answers ready instantly ✅\n\n"
+        "🔥 Get your FREE credentials now �\n"
+        f"{ref_link}"
+    )
+    wa_url = f"https://wa.me/?text={quote(wa_text)}"
 
     keyboard = [
         [
